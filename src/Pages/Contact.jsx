@@ -19,15 +19,15 @@ const Contact = () => {
                             <div className="flex items-start">
                                 <MapPin className="w-6 h-6 text-[var(--color-primary-red)] mt-1 mr-4 shrink-0" />
                                 <div>
-                                    <h3 className="font-semibold text-gray-900">Sydney Office</h3>
-                                    <p className="text-gray-600">Level 4, 123 Business St<br />Sydney, NSW 2000<br />Australia</p>
+                                    <h3 className="font-semibold text-gray-900">Head Office</h3>
+                                    <p className="text-gray-600">33 Edward Avenue<br />Dandenong VIC 3175, Australia</p>
                                 </div>
                             </div>
                             <div className="flex items-start">
                                 <Mail className="w-6 h-6 text-[var(--color-primary-red)] mt-1 mr-4 shrink-0" />
                                 <div>
                                     <h3 className="font-semibold text-gray-900">Email</h3>
-                                    <p className="text-gray-600">support@pulseemployment.com</p>
+                                    <p className="text-gray-600">pulsemployment@gmail.com</p>
                                     <p className="text-sm text-gray-400 mt-1">We respond within 24 hours.</p>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@ const Contact = () => {
                                 <Phone className="w-6 h-6 text-[var(--color-primary-red)] mt-1 mr-4 shrink-0" />
                                 <div>
                                     <h3 className="font-semibold text-gray-900">Phone</h3>
-                                    <p className="text-gray-600">+61 2 1234 5678</p>
+                                    <p className="text-gray-600">+61 417 713 034</p>
                                 </div>
                             </div>
                             <div className="flex items-start">
