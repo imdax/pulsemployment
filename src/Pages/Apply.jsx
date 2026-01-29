@@ -1,267 +1,525 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { User, Briefcase, FileCheck, CheckCircle, ChevronRight, ChevronLeft, AlertCircle } from 'lucide-react';
-import Button from '../Components/Button';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  User,
+  Briefcase,
+  FileCheck,
+  CheckCircle,
+  ChevronRight,
+  ChevronLeft,
+} from "lucide-react";
+import Button from "../Components/Button";
+import API from "../services/api";
+
+/* ---------------- ALL COUNTRIES ---------------- */
+const COUNTRIES = [
+  "Afghanistan",
+  "Albania",
+  "Algeria",
+  "Andorra",
+  "Angola",
+  "Argentina",
+  "Armenia",
+  "Australia",
+  "Austria",
+  "Azerbaijan",
+  "Bahamas",
+  "Bangladesh",
+  "Belgium",
+  "Belize",
+  "Bhutan",
+  "Bolivia",
+  "Botswana",
+  "Brazil",
+  "Bulgaria",
+  "Cambodia",
+  "Cameroon",
+  "Canada",
+  "Chile",
+  "China",
+  "Colombia",
+  "Costa Rica",
+  "Croatia",
+  "Cuba",
+  "Cyprus",
+  "Czech Republic",
+  "Denmark",
+  "Dominican Republic",
+  "Ecuador",
+  "Egypt",
+  "Estonia",
+  "Ethiopia",
+  "Finland",
+  "France",
+  "Georgia",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "Guatemala",
+  "Hong Kong",
+  "Hungary",
+  "Iceland",
+  "India",
+  "Indonesia",
+  "Iran",
+  "Iraq",
+  "Ireland",
+  "Israel",
+  "Italy",
+  "Japan",
+  "Jordan",
+  "Kazakhstan",
+  "Kenya",
+  "Kuwait",
+  "Laos",
+  "Latvia",
+  "Lebanon",
+  "Lithuania",
+  "Luxembourg",
+  "Malaysia",
+  "Maldives",
+  "Mexico",
+  "Mongolia",
+  "Morocco",
+  "Myanmar",
+  "Nepal",
+  "Netherlands",
+  "New Zealand",
+  "Nigeria",
+  "Norway",
+  "Oman",
+  "Pakistan",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Qatar",
+  "Romania",
+  "Russia",
+  "Saudi Arabia",
+  "Singapore",
+  "Slovakia",
+  "Slovenia",
+  "South Africa",
+  "South Korea",
+  "Spain",
+  "Sri Lanka",
+  "Sweden",
+  "Switzerland",
+  "Taiwan",
+  "Thailand",
+  "Turkey",
+  "Ukraine",
+  "United Arab Emirates",
+  "United Kingdom",
+  "United States",
+  "Vietnam",
+  "Zimbabwe",
+];
+
+/* ---------------- COUNTRY CODES ---------------- */
+const COUNTRY_CODES = [
+  "+1",
+  "+7",
+  "+20",
+  "+27",
+  "+30",
+  "+31",
+  "+32",
+  "+33",
+  "+34",
+  "+36",
+  "+39",
+  "+40",
+  "+41",
+  "+43",
+  "+44",
+  "+45",
+  "+46",
+  "+47",
+  "+48",
+  "+49",
+  "+51",
+  "+52",
+  "+53",
+  "+54",
+  "+55",
+  "+56",
+  "+57",
+  "+60",
+  "+61",
+  "+62",
+  "+63",
+  "+64",
+  "+65",
+  "+66",
+  "+81",
+  "+82",
+  "+86",
+  "+90",
+  "+91",
+  "+92",
+  "+94",
+  "+95",
+  "+98",
+  "+212",
+  "+213",
+  "+234",
+  "+251",
+  "+254",
+  "+256",
+  "+880",
+  "+971",
+  "+972",
+];
 
 const Apply = () => {
-    const navigate = useNavigate();
-    const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState({
-        // Step 1: Personal
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        country: '',
-        // Step 2: Professional
-        profession: '',
-        yearsExperience: '',
-        education: '',
-        englishLevel: '',
-        // Step 3: Assessment
-        hasPassport: '',
-        hasCriminalRecord: '',
-        hasHealthIssues: '',
-        agreeToTerms: false
-    });
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
+  const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [professionsByCategory, setProfessionsByCategory] = useState({});
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    country: "",
+    phoneCode: "",
+    phoneNumber: "",
+    age: "",
+    profession: "",
+    yearsExperience: "",
+    englishLevel: "",
+    hasPassport: "",
+    hasCriminalRecord: "",
+    hasHealthIssues: "",
+    agreeToTerms: false,
+  });
+
+  /* ---------------- FETCH PROFESSIONS ---------------- */
+  useEffect(() => {
+    const fetchProfessions = async () => {
+      const res = await API.get("/api/professions");
+      const grouped = {};
+      res.data.data.forEach((p) => {
+        if (!grouped[p.category]) grouped[p.category] = [];
+        grouped[p.category].push(p);
+      });
+      setProfessionsByCategory(grouped);
+    };
+    fetchProfessions();
+  }, []);
+
+  /* ---------------- AUTO-DETECT COUNTRY FROM IP ---------------- */
+  useEffect(() => {
+    const detectCountry = async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+
+        if (data?.country_name && data?.country_calling_code) {
+          setFormData((prev) => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
+            country: data.country_name,
+            phoneCode: data.country_calling_code,
+          }));
+        }
+      } catch {
+        // silent fail
+      }
     };
+    detectCountry();
+  }, []);
 
-    const calculateEligibility = () => {
-        // Simple logic for demo purposes
-        let isEligible = true;
+  /* ---------------- HANDLER ---------------- */
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((p) => ({
+      ...p,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
-        // 1. Must have at least 2 years experience (assuming options are '0-1', '2-5', '5+')
-        if (formData.yearsExperience === '0-1' || formData.yearsExperience === '') isEligible = false;
+  /* ---------------- STEP VALIDATION ---------------- */
+  const validateStep = () => {
+    if (currentStep === 1) {
+      if (
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.email ||
+        !formData.country ||
+        !formData.phoneCode ||
+        !formData.phoneNumber ||
+        !formData.age
+      ) {
+        setError("Please fill all required personal details.");
+        return false;
+      }
+    }
 
-        // 2. English must be at least Intermediate
-        if (formData.englishLevel === 'Basic' || formData.englishLevel === '') isEligible = false;
+    if (currentStep === 2) {
+      if (
+        !formData.profession ||
+        !formData.yearsExperience ||
+        !formData.englishLevel
+      ) {
+        setError("Please complete your professional details.");
+        return false;
+      }
+    }
 
-        // 3. Must have Passport (Yes)
-        if (formData.hasPassport !== 'Yes') isEligible = false;
+    setError("");
+    return true;
+  };
 
-        // 4. No Criminal Record (No)
-        if (formData.hasCriminalRecord === 'Yes') isEligible = false;
+  const nextStep = () => {
+    if (!validateStep()) return;
+    setCurrentStep((p) => p + 1);
+  };
 
-        // 5. Must agree to terms
-        if (!formData.agreeToTerms) isEligible = false;
+  const prevStep = () => setCurrentStep((p) => p - 1);
 
-        return isEligible;
-    };
+  /* ---------------- SUBMIT ---------------- */
+  const handleSubmit = async () => {
+    if (!formData.agreeToTerms) {
+      setError("You must agree to the declaration.");
+      return;
+    }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isEligible = calculateEligibility();
+    setLoading(true);
+    setError("");
 
-        // Simulate API call
-        setTimeout(() => {
-            if (isEligible) {
-                navigate('/result-qualified');
-            } else {
-                navigate('/result-disqualified');
-            }
-        }, 1500);
-    };
+    try {
+      const registerRes = await API.post("/api/register", {
+        ...formData,
+        phone: `${formData.phoneCode}${formData.phoneNumber}`,
+        age: Number(formData.age),
+      });
 
-    const nextStep = () => setCurrentStep(prev => prev + 1);
-    const prevStep = () => setCurrentStep(prev => prev - 1);
+      const userId = registerRes.data.data.userId;
+      const assessmentRes = await API.post("/api/assessment/start", { userId });
 
-    // Render Helpers
-    const renderStepIndicator = () => (
-        <div className="flex justify-center items-center mb-12">
-            {[1, 2, 3].map((step) => (
-                <div key={step} className="flex items-center">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-colors ${currentStep === step
-                            ? 'bg-[var(--color-primary-red)] text-white'
-                            : currentStep > step
-                                ? 'bg-green-500 text-white'
-                                : 'bg-gray-200 text-gray-500'
-                        }`}>
-                        {currentStep > step ? <CheckCircle className="w-6 h-6" /> : step}
-                    </div>
-                    {step < 3 && (
-                        <div className={`w-16 h-1 mx-2 ${currentStep > step ? 'bg-green-500' : 'bg-gray-200'}`}></div>
-                    )}
-                </div>
-            ))}
+      navigate(
+        assessmentRes.data.data.status === "ACCEPTED"
+          ? "/result-qualified"
+          : "/result-disqualified",
+        { state: assessmentRes.data.data },
+      );
+    } catch {
+      setError("Submission failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const inputClass =
+    "w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none";
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-16 px-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-[var(--color-primary-darkblue)] p-8 text-center">
+          <h1 className="text-3xl font-bold text-white">
+            Australian Eligibility Assessment
+          </h1>
+          <p className="text-blue-100 mt-2">
+            If eligible, our migration agent will contact you.
+          </p>
         </div>
-    );
 
-    return (
-        <div className="min-h-screen bg-[var(--color-neutral-offwhite)] py-20 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-                {/* Header */}
-                <div className="bg-[var(--color-primary-darkblue)] py-8 px-8 text-center">
-                    <h1 className="text-3xl font-bold text-white mb-2">Start Your Assessment</h1>
-                    <p className="text-blue-100">Complete the steps below to check your eligibility instantly.</p>
-                </div>
-
-                <div className="p-8 md:p-12">
-                    {renderStepIndicator()}
-
-                    <form onSubmit={(e) => e.preventDefault()}>
-
-                        {/* STEP 1: Personal Details */}
-                        {currentStep === 1 && (
-                            <div className="space-y-6 animate-fade-in-up">
-                                <h2 className="text-2xl font-bold text-[var(--color-primary-darkblue)] flex items-center mb-6">
-                                    <User className="mr-3 text-[var(--color-primary-salmon)]" /> Personal Details
-                                </h2>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none" required />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none" required />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                        <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none" required />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none" required />
-                                    </div>
-                                    <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Current Country of Residence</label>
-                                        <select name="country" value={formData.country} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none bg-white">
-                                            <option value="">Select Country</option>
-                                            <option value="Philippines">Philippines</option>
-                                            <option value="India">India</option>
-                                            <option value="United Kingdom">United Kingdom</option>
-                                            <option value="South Africa">South Africa</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="flex justify-end pt-6">
-                                    <Button type="button" onClick={nextStep} variant="primary">Next Step <ChevronRight className="ml-2 w-4 h-4" /></Button>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* STEP 2: Professional Experience */}
-                        {currentStep === 2 && (
-                            <div className="space-y-6 animate-fade-in-up">
-                                <h2 className="text-2xl font-bold text-[var(--color-primary-darkblue)] flex items-center mb-6">
-                                    <Briefcase className="mr-3 text-[var(--color-primary-salmon)]" /> Experience & Skills
-                                </h2>
-
-                                <div className="grid grid-cols-1 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Target Profession</label>
-                                        <select name="profession" value={formData.profession} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none bg-white">
-                                            <option value="">Select Profession</option>
-                                            <option value="Nurse">Registered Nurse</option>
-                                            <option value="Mechanic">Diesel Mechanic</option>
-                                            <option value="Chef">Chef / Cook</option>
-                                            <option value="Engineer">Engineer</option>
-                                            <option value="Teacher">Teacher</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
-                                        <div className="grid grid-cols-3 gap-4">
-                                            {['0-1', '2-5', '5+'].map(opt => (
-                                                <label key={opt} className={`cursor-pointer border rounded-lg p-4 text-center hover:bg-gray-50 ${formData.yearsExperience === opt ? 'border-[var(--color-primary-salmon)] bg-red-50 ring-1 ring-[var(--color-primary-salmon)]' : 'border-gray-200'}`}>
-                                                    <input type="radio" name="yearsExperience" value={opt} checked={formData.yearsExperience === opt} onChange={handleChange} className="sr-only" />
-                                                    <span className="font-medium text-gray-700">{opt} Years</span>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Education Level</label>
-                                        <select name="education" value={formData.education} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none bg-white">
-                                            <option value="">Select Education</option>
-                                            <option value="High School">High School</option>
-                                            <option value="Diploma">Diploma / Trade Certificate</option>
-                                            <option value="Bachelors">Bachelor's Degree</option>
-                                            <option value="Masters">Master's Degree or Higher</option>
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">English Proficiency</label>
-                                        <select name="englishLevel" value={formData.englishLevel} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[var(--color-primary-darkblue)] outline-none bg-white">
-                                            <option value="">Select Level</option>
-                                            <option value="Basic">Basic (I struggle to communicate)</option>
-                                            <option value="Intermediate">Intermediate (I can converse proficiently)</option>
-                                            <option value="Advanced">Advanced / Native (Fluent)</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="flex justify-between pt-6">
-                                    <Button type="button" onClick={prevStep} variant="outline" className="border-gray-300 text-gray-600"><ChevronLeft className="mr-2 w-4 h-4" /> Back</Button>
-                                    <Button type="button" onClick={nextStep} variant="primary">Next Step <ChevronRight className="ml-2 w-4 h-4" /></Button>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* STEP 3: Assessment & Submit */}
-                        {currentStep === 3 && (
-                            <div className="space-y-6 animate-fade-in-up">
-                                <h2 className="text-2xl font-bold text-[var(--color-primary-darkblue)] flex items-center mb-6">
-                                    <FileCheck className="mr-3 text-[var(--color-primary-salmon)]" /> Final Assessment
-                                </h2>
-
-                                <div className="space-y-6">
-                                    <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
-                                        <label className="block text-base font-semibold text-[var(--color-primary-darkblue)] mb-3">Do you possess a valid passport from your country of residence?</label>
-                                        <div className="flex gap-6">
-                                            <label className="flex items-center cursor-pointer"><input type="radio" name="hasPassport" value="Yes" checked={formData.hasPassport === 'Yes'} onChange={handleChange} className="w-5 h-5 text-[var(--color-primary-darkblue)]" /> <span className="ml-2">Yes</span></label>
-                                            <label className="flex items-center cursor-pointer"><input type="radio" name="hasPassport" value="No" checked={formData.hasPassport === 'No'} onChange={handleChange} className="w-5 h-5 text-[var(--color-primary-darkblue)]" /> <span className="ml-2">No</span></label>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
-                                        <label className="block text-base font-semibold text-[var(--color-primary-darkblue)] mb-3">Have you ever been convicted of a criminal offence?</label>
-                                        <div className="flex gap-6">
-                                            <label className="flex items-center cursor-pointer"><input type="radio" name="hasCriminalRecord" value="Yes" checked={formData.hasCriminalRecord === 'Yes'} onChange={handleChange} className="w-5 h-5 text-[var(--color-primary-darkblue)]" /> <span className="ml-2">Yes</span></label>
-                                            <label className="flex items-center cursor-pointer"><input type="radio" name="hasCriminalRecord" value="No" checked={formData.hasCriminalRecord === 'No'} onChange={handleChange} className="w-5 h-5 text-[var(--color-primary-darkblue)]" /> <span className="ml-2">No</span></label>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
-                                        <label className="block text-base font-semibold text-[var(--color-primary-darkblue)] mb-3">Do you have any serious health conditions?</label>
-                                        <div className="flex gap-6">
-                                            <label className="flex items-center cursor-pointer"><input type="radio" name="hasHealthIssues" value="Yes" checked={formData.hasHealthIssues === 'Yes'} onChange={handleChange} className="w-5 h-5 text-[var(--color-primary-darkblue)]" /> <span className="ml-2">Yes</span></label>
-                                            <label className="flex items-center cursor-pointer"><input type="radio" name="hasHealthIssues" value="No" checked={formData.hasHealthIssues === 'No'} onChange={handleChange} className="w-5 h-5 text-[var(--color-primary-darkblue)]" /> <span className="ml-2">No</span></label>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start p-4 border border-gray-200 rounded-lg">
-                                        <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange} className="w-5 h-5 mt-1 text-[var(--color-primary-red)] rounded border-gray-300 focus:ring-[var(--color-primary-red)]" />
-                                        <p className="ml-3 text-sm text-gray-500">I certify that the information provided is true and correct. I understand that this is a preliminary assessment and does not guarantee a visa or employment.</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex justify-between pt-6">
-                                    <Button type="button" onClick={prevStep} variant="outline" className="border-gray-300 text-gray-600"><ChevronLeft className="mr-2 w-4 h-4" /> Back</Button>
-                                    <Button type="button" onClick={handleSubmit} variant="primary" size="large" className="px-8 shadow-xl">Submit & Check Results</Button>
-                                </div>
-                            </div>
-                        )}
-
-                    </form>
-                </div>
+        <div className="p-8">
+          {error && (
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl">
+              {error}
             </div>
+          )}
+
+          {/* STEP 1 */}
+          {currentStep === 1 && (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold flex gap-2">
+                <User /> Personal Details
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <input
+                  name="firstName"
+                  placeholder="First Name"
+                  className={inputClass}
+                  onChange={handleChange}
+                />
+                <input
+                  name="lastName"
+                  placeholder="Last Name"
+                  className={inputClass}
+                  onChange={handleChange}
+                />
+                <input
+                  name="email"
+                  placeholder="Email"
+                  className={inputClass}
+                  onChange={handleChange}
+                />
+                <input
+                  name="age"
+                  type="number"
+                  placeholder="Age"
+                  className={inputClass}
+                  onChange={handleChange}
+                />
+
+                <select
+                  name="country"
+                  value={formData.country}
+                  className={inputClass}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Country</option>
+                  {COUNTRIES.map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
+                </select>
+
+                <div className="flex gap-3">
+                  <select
+                    name="phoneCode"
+                    value={formData.phoneCode}
+                    className="w-1/3 px-3 py-3 border rounded-xl"
+                    onChange={handleChange}
+                  >
+                    <option value="">Code</option>
+                    {COUNTRY_CODES.map((c) => (
+                      <option key={c}>{c}</option>
+                    ))}
+                  </select>
+                  <input
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                    className="w-2/3 px-4 py-3 border rounded-xl"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <p className="text-xs text-gray-500 md:col-span-2">
+                  Country and country code are auto-detected. You may change
+                  them if needed.
+                </p>
+              </div>
+
+              <div className="flex justify-end">
+                <Button onClick={nextStep}>
+                  Next <ChevronRight size={16} />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 2 */}
+          {currentStep === 2 && (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold flex gap-2">
+                <Briefcase /> Professional Details
+              </h2>
+
+              <select
+                name="profession"
+                className={inputClass}
+                onChange={handleChange}
+              >
+                <option value="">Select Profession</option>
+                {Object.entries(professionsByCategory).map(([cat, list]) => (
+                  <optgroup key={cat} label={cat}>
+                    {list.map((p) => (
+                      <option key={p._id}>{p.name}</option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+
+              <select
+                name="yearsExperience"
+                className={inputClass}
+                onChange={handleChange}
+              >
+                <option value="">Years of Experience</option>
+                <option value="0-1">0–1</option>
+                <option value="2-5">2–5</option>
+                <option value="5+">5+</option>
+              </select>
+
+              <select
+                name="englishLevel"
+                className={inputClass}
+                onChange={handleChange}
+              >
+                <option value="">English Proficiency</option>
+                <option>Basic</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+              </select>
+
+              <div className="flex justify-between">
+                <Button variant="outline" onClick={prevStep}>
+                  <ChevronLeft size={16} /> Back
+                </Button>
+                <Button onClick={nextStep}>
+                  Next <ChevronRight size={16} />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3 */}
+          {currentStep === 3 && (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold flex gap-2">
+                <FileCheck /> Final Assessment
+              </h2>
+
+              {["hasPassport", "hasCriminalRecord", "hasHealthIssues"].map(
+                (f) => (
+                  <select
+                    key={f}
+                    name={f}
+                    className={inputClass}
+                    onChange={handleChange}
+                  >
+                    <option value="">
+                      {f
+                        .replace("has", "Do you have ")
+                        .replace(/([A-Z])/g, " $1")}
+                      ?
+                    </option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                ),
+              )}
+
+              <label className="flex gap-3 text-sm text-gray-600">
+                <input
+                  type="checkbox"
+                  name="agreeToTerms"
+                  onChange={handleChange}
+                />
+                I confirm the information provided is correct.
+              </label>
+
+              <div className="flex justify-between">
+                <Button variant="outline" onClick={prevStep}>
+                  <ChevronLeft size={16} /> Back
+                </Button>
+                <Button onClick={handleSubmit} disabled={loading}>
+                  {loading ? "Assessing…" : "Submit & Check Results"}
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Apply;
