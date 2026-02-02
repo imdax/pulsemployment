@@ -10,6 +10,7 @@ import {
     PiArrowRight
 } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
+import logo from "../assets/logo.png";
 
 const Footer = () => {
     return (
@@ -19,20 +20,24 @@ const Footer = () => {
                     {/* Company Info */}
                     <div>
                         <Link to="/" className="flex items-center space-x-2 mb-6">
-                            <div className="flex flex-col">
-                                <span className="font-bold text-2xl tracking-wider leading-none">PULS</span>
-                                <span className="text-[var(--color-primary-red)] text-sm tracking-[0.2em] font-medium leading-none">EMPLOYMENT</span>
-                            </div>
+                            <img src={logo} alt="Pulse Employment" className="h-12 w-auto object-contain" />
                         </Link>
                         <p className="text-gray-400 mb-6 leading-relaxed text-sm">
                             Connecting exceptional talent with world-class opportunities.
                             We're reshaping the future of employment through innovation and dedication.
                         </p>
                         <div className="flex space-x-4">
-                            {[PiFacebookLogo, PiTwitterLogo, PiInstagramLogo, PiLinkedinLogo].map((Icon, index) => (
+                            {[
+                                { Icon: PiFacebookLogo, link: "https://www.facebook.com/profile.php?id=61586498556684" },
+                                { Icon: PiTwitterLogo, link: "#" },
+                                { Icon: PiInstagramLogo, link: "#" },
+                                { Icon: PiLinkedinLogo, link: "#" }
+                            ].map(({ Icon, link }, index) => (
                                 <a
                                     key={index}
-                                    href="#"
+                                    href={link}
+                                    target={link !== "#" ? "_blank" : "_self"}
+                                    rel={link !== "#" ? "noopener noreferrer" : ""}
                                     className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[var(--color-primary-red)] transition-all duration-300"
                                 >
                                     <Icon className="w-5 h-5" />

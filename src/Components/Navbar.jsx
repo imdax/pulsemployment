@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { PiList, PiX, PiPhone, PiEnvelope, PiFacebookLogo, PiTwitterLogo, PiLinkedinLogo, PiInstagramLogo } from "react-icons/pi";
 import Button from "./Button";
 
+import logo from "../assets/logo.png";
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -38,7 +40,7 @@ function Navbar() {
           <div className="flex items-center space-x-4">
             <span className="hidden sm:inline">Follow Us:</span>
             <div className="flex space-x-3">
-              <a href="#" className="hover:text-gray-200 transition-colors"><PiFacebookLogo className="h-4 w-4" /></a>
+              <a href="https://www.facebook.com/profile.php?id=61586498556684" target="_blank" rel="noopener noreferrer" className="hover:text-gray-200 transition-colors"><PiFacebookLogo className="h-4 w-4" /></a>
               <a href="#" className="hover:text-gray-200 transition-colors"><PiTwitterLogo className="h-4 w-4" /></a>
               <a href="#" className="hover:text-gray-200 transition-colors"><PiLinkedinLogo className="h-4 w-4" /></a>
               <a href="#" className="hover:text-gray-200 transition-colors"><PiInstagramLogo className="h-4 w-4" /></a>
@@ -53,10 +55,7 @@ function Navbar() {
           <div className="flex justify-between h-24 items-center">
             {/* LOGO */}
             <Link to="/" className="flex-shrink-0 flex items-center group">
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl tracking-wider leading-none">PULS</span>
-                <span className="text-[var(--color-primary-red)] text-sm tracking-[0.2em] font-medium leading-none">EMPLOYMENT</span>
-              </div>
+              <img src={logo} alt="Pulse Employment" className="h-18 w-32 w-auto object-contain" />
             </Link>
 
             {/* Desktop Menu */}

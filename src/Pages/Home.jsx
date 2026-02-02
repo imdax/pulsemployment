@@ -8,6 +8,7 @@ import ProcessSection from "../Components/ProcessSection";
 import TeamSection from "../Components/TeamSection";
 import ClientsStrip from "../Components/ClientsStrip";
 import BlogSection from "../Components/BlogSection";
+import TestimonialSection from "../Components/TestimonialSection";
 
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
       <ServicesGrid />         {/* Section 6 */}
       <ConsultancySection />   {/* Sections 7 & 8 */}
       <CaseStudies />          {/* Section 9 */}
+      <TestimonialSection />   {/* New Section */}
       <ProcessSection />       {/* Section 10 */}
       <TeamSection />          {/* Section 11 */}
       <ClientsStrip />         {/* Section 12 */}
