@@ -1,5 +1,5 @@
 import React from "react";
-import { PiLinkedinLogo, PiEnvelope } from "react-icons/pi";
+import { PiLinkedinLogo, PiEnvelope, PiGoogleLogo } from "react-icons/pi";
 import img from "../assets/ruwan.jpg";
 
 function TeamSection() {
@@ -7,7 +7,9 @@ function TeamSection() {
     {
       name: "Dr. Ruwan Paul",
       title: "Migration Specialist",
-      image: img, // ✅ fixed key
+      image: img,
+      linkedin: "https://au.linkedin.com/in/dr-ruwan-paul-jp-deshamanya-pmjf-meng-melb-aus",
+      google: "https://www.google.com/search?q=Dr+Ruwan+Paul",
     },
   ];
 
@@ -39,7 +41,9 @@ function TeamSection() {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary-darkblue)]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 space-x-4">
                   <a
-                    href="#"
+                    href={member.linkedin || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-2 bg-white rounded-full hover:bg-[var(--color-primary-red)] hover:text-white transition-colors"
                   >
                     <PiLinkedinLogo className="w-5 h-5" />
@@ -49,6 +53,15 @@ function TeamSection() {
                     className="p-2 bg-white rounded-full hover:bg-[var(--color-primary-red)] hover:text-white transition-colors"
                   >
                     <PiEnvelope className="w-5 h-5" />
+                  </a>
+                  <a
+                    href={member.google || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white rounded-full hover:bg-[var(--color-primary-red)] hover:text-white transition-colors"
+                    title="Know More"
+                  >
+                    <PiGoogleLogo className="w-5 h-5" />
                   </a>
                 </div>
               </div>

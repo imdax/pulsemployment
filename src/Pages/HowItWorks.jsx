@@ -1,38 +1,79 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ClipboardCheck, BrainCircuit, UserCheck, Scale, HelpCircle, ArrowRight } from 'lucide-react';
+import {
+  ClipboardCheck,
+  FileText,
+  Scale,
+  Languages,
+  Mail,
+  FolderOpen,
+  Send,
+  CheckCircle,
+  HelpCircle,
+  ArrowRight,
+  Phone,
+  User
+} from 'lucide-react';
 import Button from '../Components/Button';
 
 const HowItWorks = () => {
   const steps = [
     {
       id: "01",
-      title: 'Submit Your Application',
-      description: 'Fill out our simple online form with your personal details, education, and work experience. It takes less than 10 minutes and is secured by industry-standard encryption.',
+      title: 'Check Eligibility',
+      description: 'Free Consultation to assess your initial eligibility.',
       icon: <ClipboardCheck className="w-8 h-8 text-white" />,
       color: 'bg-blue-600'
     },
     {
       id: "02",
-      title: 'Automated AI Assessment',
-      description: 'Our proprietary system instantly evaluates your profile against current Australian skilled migration criteria and job market needs. This eliminates bias and gives you an immediate preliminary result.',
-      icon: <BrainCircuit className="w-8 h-8 text-white" />,
+      title: 'Register Your Expression Of Interest',
+      description: 'Registration Cost - 250$. Formally assess your potential.',
+      icon: <FileText className="w-8 h-8 text-white" />,
       color: 'bg-[var(--color-primary-red)]'
     },
     {
       id: "03",
-      title: 'Receive Qualification Status',
-      description: 'If you qualify, you will progress to the next stage. If not, we provide detailed guidance on upskilling or alternative pathways to help you reach your goal in the future.',
-      icon: <UserCheck className="w-8 h-8 text-white" />,
+      title: 'Skill Assessment',
+      description: 'Point Test & Consultation. Determine your Pathway To Aus.',
+      icon: <Scale className="w-8 h-8 text-white" />,
       color: 'bg-[var(--color-primary-salmon)]'
     },
     {
       id: "04",
-      title: 'Legal & Employment Support',
-      description: 'Qualified candidates are connected with independent migration lawyers and recruitment consultants to formalize the visa process and secure employment.',
-      icon: <Scale className="w-8 h-8 text-white" />,
+      title: 'English Language Proficiency',
+      description: 'Prove your English language skills as required for the visa.',
+      icon: <Languages className="w-8 h-8 text-white" />,
       color: 'bg-purple-600'
+    },
+    {
+      id: "05",
+      title: 'Skills Visa / Invitation to Apply',
+      description: 'Get Your invitation to Apply (For Sponsor Visa).',
+      icon: <Mail className="w-8 h-8 text-white" />,
+      color: 'bg-indigo-600'
+    },
+    {
+      id: "06",
+      title: 'Gather Your Document',
+      description: 'Collect all necessary documents for your application.',
+      icon: <FolderOpen className="w-8 h-8 text-white" />,
+      color: 'bg-teal-600'
+    },
+    {
+      id: "07",
+      title: 'Submit Your PR Application',
+      description: 'Lodge your Permanent Residency application officially.',
+      icon: <Send className="w-8 h-8 text-white" />,
+      color: 'bg-orange-600'
+    },
+    {
+      id: "08",
+      title: 'Get Your Visa Grant',
+      description: 'Receive your visa grant and prepare for your move!',
+      icon: <CheckCircle className="w-8 h-8 text-white" />,
+      color: 'bg-green-600'
     }
   ];
 
@@ -49,10 +90,10 @@ const HowItWorks = () => {
             The Pathway
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            How It Works
+            How to migrate to Australia in 2025?
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
-            A clear, transparent, and step-by-step journey from your current location to a new career in Australia.
+            Get your PR by correct path. A clear, step-by-step journey from your current location to a new life in Australia.
           </p>
         </div>
       </div>
@@ -90,6 +131,55 @@ const HowItWorks = () => {
 
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Info Card */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-gray-100">
+            <div>
+              <h3 className="text-2xl font-bold text-[var(--color-primary-darkblue)] mb-2">Contact us for more details</h3>
+              <p className="text-gray-500 mb-6">Expert guidance for your migration journey.</p>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 text-green-600">
+                    <User size={20} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900">Dr. Lidia Paul</p>
+                    <p className="text-gray-600">+61 414 873 868</p>
+                    <p className="text-sm text-[var(--color-primary-red)] font-semibold mt-1">Lidia Paul (MARA) 0901242</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
+                    <User size={20} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900">
+                      <a href="https://au.linkedin.com/in/dr-ruwan-paul-jp-deshamanya-pmjf-meng-melb-aus" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                        Ruwan Paul
+                      </a>
+                    </p>
+                    <p className="text-gray-600">+61 417 713 034</p>
+                    <p className="text-gray-600">+61 406 254 868</p>
+                    <a href="https://www.google.com/search?q=Dr+Ruwan+Paul" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline mt-1 block">
+                      Know More
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full md:w-auto flex flex-col gap-3">
+              <Link to="/contact">
+                <Button className="w-full md:w-auto">Get in Touch</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

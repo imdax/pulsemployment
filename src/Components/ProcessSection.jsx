@@ -1,32 +1,56 @@
 import React from "react";
-import { PiFileText, PiClipboardText, PiMagnifyingGlass, PiUsersThree, PiHandshake } from "react-icons/pi";
+import {
+    ClipboardCheck,
+    FileText,
+    Scale,
+    Languages,
+    Mail,
+    FolderOpen,
+    Send,
+    CheckCircle
+} from 'lucide-react';
 
 function ProcessSection() {
     const steps = [
         {
-            icon: <PiFileText className="w-6 h-6 text-white" />,
-            title: "Apply Online",
-            desc: "Submit your profile via our portal.",
+            icon: <ClipboardCheck className="w-6 h-6 text-white" />,
+            title: 'Check Eligibility',
+            desc: 'Free Consultation.',
         },
         {
-            icon: <PiClipboardText className="w-6 h-6 text-white" />,
-            title: "Eligibility Assessment",
-            desc: "We verify your skills & quals.",
+            icon: <FileText className="w-6 h-6 text-white" />,
+            title: 'Expression Of Interest',
+            desc: 'Registration Cost - 250$.',
         },
         {
-            icon: <PiMagnifyingGlass className="w-6 h-6 text-white" />,
-            title: "Candidate Shortlisting",
-            desc: "Matching you with tailored roles.",
+            icon: <Scale className="w-6 h-6 text-white" />,
+            title: 'Skill Assessment',
+            desc: 'Point Test & Consultation.',
         },
         {
-            icon: <PiUsersThree className="w-6 h-6 text-white" />,
-            title: "Employer Review",
-            desc: "Direct interview with companies.",
+            icon: <Languages className="w-6 h-6 text-white" />,
+            title: 'English Proficiency',
+            desc: 'Prove your language skills.',
         },
         {
-            icon: <PiHandshake className="w-6 h-6 text-white" />,
-            title: "Placement Support",
-            desc: "Visa & relocation guidance.",
+            icon: <Mail className="w-6 h-6 text-white" />,
+            title: 'Invitation to Apply',
+            desc: 'Skills Visa Invitation.',
+        },
+        {
+            icon: <FolderOpen className="w-6 h-6 text-white" />,
+            title: 'Gather Documents',
+            desc: 'Collect necessary docs.',
+        },
+        {
+            icon: <Send className="w-6 h-6 text-white" />,
+            title: 'Submit Application',
+            desc: 'Lodge PR application.',
+        },
+        {
+            icon: <CheckCircle className="w-6 h-6 text-white" />,
+            title: 'Visa Grant',
+            desc: 'Receive your visa!',
         },
     ];
 
@@ -36,13 +60,11 @@ function ProcessSection() {
                 <h2 className="text-4xl font-bold text-[var(--color-primary-darkblue)] mb-2">
                     Our Recruitment <span className="text-[var(--color-primary-red)]">Process</span>
                 </h2>
-                <p className="text-gray-500 mb-16">Simple, transparent, and effective.</p>
+                <p className="text-gray-500 mb-16">Your 8-step journey to Australia.</p>
 
                 <div className="relative">
-                    {/* Connecting Line (Desktop) */}
-                    <div className="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-gray-200 -z-10"></div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                    {/* Grid Layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {steps.map((step, index) => (
                             <div key={index} className="flex flex-col items-center group">
                                 <div className="w-24 h-24 rounded-full bg-white border-4 border-[var(--color-neutral-offwhite)] flex items-center justify-center mb-6 relative z-10 group-hover:border-[var(--color-primary-red)] transition-colors duration-300 shadow-sm">
@@ -54,7 +76,7 @@ function ProcessSection() {
                                     </div>
                                 </div>
                                 <h3 className="text-lg font-bold text-[var(--color-primary-darkblue)] mb-2">{step.title}</h3>
-                                <p className="text-gray-500 text-sm max-w-[150px] mx-auto leading-relaxed">{step.desc}</p>
+                                <p className="text-gray-500 text-sm max-w-[200px] mx-auto leading-relaxed">{step.desc}</p>
                             </div>
                         ))}
                     </div>
