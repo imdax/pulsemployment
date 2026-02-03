@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { PiList, PiX, PiPhone, PiEnvelope, PiFacebookLogo, PiTwitterLogo, PiLinkedinLogo, PiInstagramLogo } from "react-icons/pi";
+import {
+  PiList,
+  PiX,
+  PiPhone,
+  PiEnvelope,
+  PiFacebookLogo,
+  PiTwitterLogo,
+  PiLinkedinLogo,
+  PiInstagramLogo,
+} from "react-icons/pi";
 import Button from "./Button";
 
 import logo from "../assets/logo.png";
@@ -28,7 +37,9 @@ function Navbar() {
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <PiPhone className="h-4 w-4" />
-              <span className="font-medium">Call / WhatsApp: +61 417 713 034</span>
+              <span className="font-medium">
+                Call / WhatsApp: +61 417 713 034 / +61 461 525 878{" "}
+              </span>
             </div>
             <div className="flex items-center space-x-2">
               <PiEnvelope className="h-4 w-4" />
@@ -40,10 +51,23 @@ function Navbar() {
           <div className="flex items-center space-x-4">
             <span className="hidden sm:inline">Follow Us:</span>
             <div className="flex space-x-3">
-              <a href="https://www.facebook.com/profile.php?id=61586498556684" target="_blank" rel="noopener noreferrer" className="hover:text-gray-200 transition-colors"><PiFacebookLogo className="h-4 w-4" /></a>
-              <a href="#" className="hover:text-gray-200 transition-colors"><PiTwitterLogo className="h-4 w-4" /></a>
-              <a href="#" className="hover:text-gray-200 transition-colors"><PiLinkedinLogo className="h-4 w-4" /></a>
-              <a href="#" className="hover:text-gray-200 transition-colors"><PiInstagramLogo className="h-4 w-4" /></a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61586498556684"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-200 transition-colors"
+              >
+                <PiFacebookLogo className="h-4 w-4" />
+              </a>
+              <a href="#" className="hover:text-gray-200 transition-colors">
+                <PiTwitterLogo className="h-4 w-4" />
+              </a>
+              <a href="#" className="hover:text-gray-200 transition-colors">
+                <PiLinkedinLogo className="h-4 w-4" />
+              </a>
+              <a href="#" className="hover:text-gray-200 transition-colors">
+                <PiInstagramLogo className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </div>
@@ -55,7 +79,11 @@ function Navbar() {
           <div className="flex justify-between h-24 items-center">
             {/* LOGO */}
             <Link to="/" className="flex-shrink-0 flex items-center group">
-              <img src={logo} alt="Pulse Employment" className="h-18 w-32 w-auto object-contain" />
+              <img
+                src={logo}
+                alt="Pulse Employment"
+                className="h-18 w-32 w-auto object-contain"
+              />
             </Link>
 
             {/* Desktop Menu */}
@@ -64,8 +92,11 @@ function Navbar() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-sm font-medium transition-colors hover:text-[var(--color-primary-red)] ${isActive(link.path) ? "text-[var(--color-primary-red)]" : "text-white"
-                    }`}
+                  className={`text-sm font-medium transition-colors hover:text-[var(--color-primary-red)] ${
+                    isActive(link.path)
+                      ? "text-[var(--color-primary-red)]"
+                      : "text-white"
+                  }`}
                 >
                   {link.name}
                 </Link>
@@ -88,7 +119,11 @@ function Navbar() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-white hover:text-[var(--color-primary-red)] focus:outline-none"
               >
-                {isOpen ? <PiX className="h-8 w-8" /> : <PiList className="h-8 w-8" />}
+                {isOpen ? (
+                  <PiX className="h-8 w-8" />
+                ) : (
+                  <PiList className="h-8 w-8" />
+                )}
               </button>
             </div>
           </div>
@@ -103,10 +138,11 @@ function Navbar() {
                   key={link.name}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-3 rounded-md text-base font-medium ${isActive(link.path)
-                    ? "text-[var(--color-primary-red)] bg-white/5"
-                    : "text-gray-200 hover:text-white hover:bg-white/5"
-                    }`}
+                  className={`block px-3 py-3 rounded-md text-base font-medium ${
+                    isActive(link.path)
+                      ? "text-[var(--color-primary-red)] bg-white/5"
+                      : "text-gray-200 hover:text-white hover:bg-white/5"
+                  }`}
                 >
                   {link.name}
                 </Link>
