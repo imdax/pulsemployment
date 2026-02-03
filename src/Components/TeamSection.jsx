@@ -26,17 +26,17 @@ function TeamSection() {
           hiring.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {team.map((member, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-300"
+              className="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-300 w-full sm:w-[calc(50%-2rem)] lg:w-[calc(25%-2rem)] max-w-sm"
             >
               <div className="h-64 overflow-hidden relative">
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-full object-full group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary-darkblue)]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 space-x-4">
