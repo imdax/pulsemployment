@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   ClipboardCheck,
   FileText,
@@ -13,68 +12,69 @@ import {
   HelpCircle,
   ArrowRight,
   Phone,
-  User
-} from 'lucide-react';
-import Button from '../Components/Button';
+  User,
+} from "lucide-react";
+import Button from "../Components/Button";
 
 const HowItWorks = () => {
   const steps = [
     {
       id: "01",
-      title: 'Check Eligibility',
-      description: 'Free Consultation to assess your initial eligibility.',
+      title: "Check Eligibility",
+      description: "Free Consultation to assess your initial eligibility.",
       icon: <ClipboardCheck className="w-8 h-8 text-white" />,
-      color: 'bg-blue-600'
+      color: "bg-blue-600",
     },
     {
       id: "02",
-      title: 'Register Your Expression Of Interest',
-      description: 'Registration Cost - 250$. Formally assess your potential.',
+      title: "Register Your Expression Of Interest",
+      description: "Registration Cost - 250$. Formally assess your potential.",
       icon: <FileText className="w-8 h-8 text-white" />,
-      color: 'bg-[var(--color-primary-red)]'
+      color: "bg-[var(--color-primary-red)]",
     },
     {
       id: "03",
-      title: 'Skill Assessment',
-      description: 'Point Test & Consultation. Determine your Pathway To Aus.',
+      title: "Skill Assessment",
+      description: "Point Test & Consultation. Determine your Pathway To Aus.",
       icon: <Scale className="w-8 h-8 text-white" />,
-      color: 'bg-[var(--color-primary-salmon)]'
+      color: "bg-[var(--color-primary-salmon)]",
     },
     {
       id: "04",
-      title: 'English Language Proficiency',
-      description: 'Prove your English language skills as required for the visa.',
+      title: "English Language Proficiency",
+      description:
+        "Prove your English language skills as required for the visa.",
       icon: <Languages className="w-8 h-8 text-white" />,
-      color: 'bg-purple-600'
+      color: "bg-purple-600",
     },
     {
       id: "05",
-      title: 'Skills Visa / Invitation to Apply',
-      description: 'Get Your invitation to Apply (For Sponsor Visa).',
+      title: "Skills Visa / Invitation to Apply",
+      description: "Get Your invitation to Apply (For Sponsor Visa).",
       icon: <Mail className="w-8 h-8 text-white" />,
-      color: 'bg-indigo-600'
+      color: "bg-indigo-600",
     },
     {
       id: "06",
-      title: 'Gather Your Document',
-      description: 'Collect all necessary documents for your application.',
+      title: "Gather Your Document",
+      description: "Collect all necessary documents for your application.",
       icon: <FolderOpen className="w-8 h-8 text-white" />,
-      color: 'bg-teal-600'
+      color: "bg-teal-600",
     },
     {
       id: "07",
-      title: 'Submit Your PR Application',
-      description: 'Lodge your Permanent Residency application officially.',
+      title: "Submit Your PR Application",
+      description: "Lodge your Permanent Residency application officially.",
       icon: <Send className="w-8 h-8 text-white" />,
-      color: 'bg-orange-600'
+      color: "bg-orange-600",
     },
     {
       id: "08",
-      title: 'Get Your Visa Grant',
-      description: 'Receive your visa grant and prepare for your move!',
+      title: "Get Your Visa Grant",
+      description: "Receive your visa grant and prepare for your move!",
       icon: <CheckCircle className="w-8 h-8 text-white" />,
-      color: 'bg-green-600'
-    }
+      color: "bg-green-600",
+    },
   ];
 
   return (
@@ -90,10 +90,11 @@ const HowItWorks = () => {
             The Pathway
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            How to migrate to Australia in 2025?
+            How to migrate to Australia in 2026?
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
-            Get your PR by correct path. A clear, step-by-step journey from your current location to a new life in Australia.
+            Get your PR by correct path. A clear, step-by-step journey from your
+            current location to a new life in Australia.
           </p>
         </div>
       </div>
@@ -106,12 +107,20 @@ const HowItWorks = () => {
 
           <div className="space-y-24">
             {steps.map((step, index) => (
-              <div key={step.id} className={`flex flex-col md:flex-row items-center gap-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-
+              <div
+                key={step.id}
+                className={`flex flex-col md:flex-row items-center gap-12 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+              >
                 {/* Text Content */}
-                <div className={`flex-1 text-center ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                  <div className="inline-block text-5xl font-bold text-gray-100 mb-2 font-mono">{step.id}</div>
-                  <h3 className="text-2xl font-bold text-[var(--color-primary-darkblue)] mb-4">{step.title}</h3>
+                <div
+                  className={`flex-1 text-center ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}
+                >
+                  <div className="inline-block text-5xl font-bold text-gray-100 mb-2 font-mono">
+                    {step.id}
+                  </div>
+                  <h3 className="text-2xl font-bold text-[var(--color-primary-darkblue)] mb-4">
+                    {step.title}
+                  </h3>
                   <p className="text-gray-600 leading-relaxed text-lg">
                     {step.description}
                   </p>
@@ -119,16 +128,15 @@ const HowItWorks = () => {
 
                 {/* Center Icon */}
                 <div className="relative z-10 flex-shrink-0">
-                  <div className={`w-20 h-20 rounded-2xl rotate-45 flex items-center justify-center shadow-xl border-4 border-white ${step.color} transform transition-transform hover:scale-110 duration-300`}>
-                    <div className="-rotate-45">
-                      {step.icon}
-                    </div>
+                  <div
+                    className={`w-20 h-20 rounded-2xl rotate-45 flex items-center justify-center shadow-xl border-4 border-white ${step.color} transform transition-transform hover:scale-110 duration-300`}
+                  >
+                    <div className="-rotate-45">{step.icon}</div>
                   </div>
                 </div>
 
                 {/* Spacer for alignment */}
                 <div className="flex-1 hidden md:block"></div>
-
               </div>
             ))}
           </div>
@@ -140,8 +148,12 @@ const HowItWorks = () => {
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-gray-100">
             <div>
-              <h3 className="text-2xl font-bold text-[var(--color-primary-darkblue)] mb-2">Contact us for more details</h3>
-              <p className="text-gray-500 mb-6">Expert guidance for your migration journey.</p>
+              <h3 className="text-2xl font-bold text-[var(--color-primary-darkblue)] mb-2">
+                Contact us for more details
+              </h3>
+              <p className="text-gray-500 mb-6">
+                Expert guidance for your migration journey.
+              </p>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
@@ -151,7 +163,9 @@ const HowItWorks = () => {
                   <div>
                     <p className="font-bold text-gray-900">Dr. Lidia Paul</p>
                     <p className="text-gray-600">+61 414 873 868</p>
-                    <p className="text-sm text-[var(--color-primary-red)] font-semibold mt-1">Lidia Paul (MARA) 0901242</p>
+                    <p className="text-sm text-[var(--color-primary-red)] font-semibold mt-1">
+                      Lidia Paul (MARA) 0901242
+                    </p>
                   </div>
                 </div>
 
@@ -161,13 +175,23 @@ const HowItWorks = () => {
                   </div>
                   <div>
                     <p className="font-bold text-gray-900">
-                      <a href="https://au.linkedin.com/in/dr-ruwan-paul-jp-deshamanya-pmjf-meng-melb-aus" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                      <a
+                        href="https://au.linkedin.com/in/dr-ruwan-paul-jp-deshamanya-pmjf-meng-melb-aus"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-blue-600 transition-colors"
+                      >
                         Ruwan Paul
                       </a>
                     </p>
                     <p className="text-gray-600">+61 417 713 034</p>
                     <p className="text-gray-600">+61 406 254 868</p>
-                    <a href="https://www.google.com/search?q=Dr+Ruwan+Paul" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline mt-1 block">
+                    <a
+                      href="https://www.google.com/search?q=Dr+Ruwan+Paul"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-blue-500 hover:underline mt-1 block"
+                    >
                       Know More
                     </a>
                   </div>
@@ -190,12 +214,17 @@ const HowItWorks = () => {
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mx-auto mb-6">
             <HelpCircle className="w-8 h-8 text-[var(--color-primary-darkblue)]" />
           </div>
-          <h2 className="text-3xl font-bold text-[var(--color-primary-darkblue)] mb-4">Still have questions?</h2>
+          <h2 className="text-3xl font-bold text-[var(--color-primary-darkblue)] mb-4">
+            Still have questions?
+          </h2>
           <p className="text-gray-600 mb-8 max-w-xl mx-auto text-lg">
-            We understand moving countries is a big decision. Check our detailed FAQs for more information on visas, fees, and the process.
+            We understand moving countries is a big decision. Check our detailed
+            FAQs for more information on visas, fees, and the process.
           </p>
           <Link to="/faqs">
-            <Button variant="outline" className="px-8 py-3">View Frequently Asked Questions</Button>
+            <Button variant="outline" className="px-8 py-3">
+              View Frequently Asked Questions
+            </Button>
           </Link>
         </div>
       </section>
@@ -204,12 +233,19 @@ const HowItWorks = () => {
       <section className="py-20 bg-[var(--color-primary-red)] text-center text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-8">Ready to start your journey?</h2>
+          <h2 className="text-4xl font-bold mb-8">
+            Ready to start your journey?
+          </h2>
           <p className="text-white/90 text-lg mb-10">
-            Take the first step today. It only takes a few minutes to check your eligibility.
+            Take the first step today. It only takes a few minutes to check your
+            eligibility.
           </p>
           <Link to="/apply">
-            <Button variant="white" size="large" className="shadow-lg hover:shadow-xl">
+            <Button
+              variant="white"
+              size="large"
+              className="shadow-lg hover:shadow-xl"
+            >
               Start Free Assessment <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
@@ -220,4 +256,3 @@ const HowItWorks = () => {
 };
 
 export default HowItWorks;
-
