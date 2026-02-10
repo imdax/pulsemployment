@@ -21,7 +21,7 @@ function Navbar() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
-    { name: "Job Search", path: "/jobs" },
+    // { name: "Job Search", path: "/jobs" },
     { name: "How It Works", path: "/how-it-works" },
     { name: "Contact", path: "/contact" },
   ];
