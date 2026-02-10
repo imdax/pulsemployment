@@ -27,12 +27,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/jobs" element={<JobBoard />} />
+            {/* <Route path="/" element={<JobBoard />} /> */}
             <Route path="/jobs/:id" element={<JobDetails />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/result-qualified" element={<ResultQualified />} />
-            <Route path="/result-disqualified" element={<ResultDisqualified />} />
+            <Route
+              path="/result-disqualified"
+              element={<ResultDisqualified />}
+            />
             <Route path="/faqs" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/dr-ruwan-paul" element={<DrRuwanProfile />} />
