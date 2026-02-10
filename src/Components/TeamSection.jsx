@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { PiLinkedinLogo, PiEnvelope, PiGoogleLogo } from "react-icons/pi";
 import img from "../assets/ruwan.jpg";
 
@@ -10,6 +11,7 @@ function TeamSection() {
       image: img,
       linkedin: "https://au.linkedin.com/in/dr-ruwan-paul-jp-deshamanya-pmjf-meng-melb-aus",
       google: "https://www.google.com/search?q=Dr+Ruwan+Paul",
+      profileLink: "/dr-ruwan-paul",
     },
   ];
 
@@ -68,7 +70,13 @@ function TeamSection() {
 
               <div className="p-6">
                 <h3 className="text-lg font-bold text-[var(--color-primary-darkblue)]">
-                  {member.name}
+                  {member.profileLink ? (
+                    <Link to={member.profileLink} className="hover:text-[var(--color-primary-red)] transition-colors">
+                      {member.name}
+                    </Link>
+                  ) : (
+                    member.name
+                  )}
                 </h3>
                 <p className="text-[var(--color-primary-red)] text-sm font-medium mt-1">
                   {member.title}

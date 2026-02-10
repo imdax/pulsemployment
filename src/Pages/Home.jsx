@@ -10,11 +10,14 @@ import ClientsStrip from "../Components/ClientsStrip";
 import BlogSection from "../Components/BlogSection";
 import TestimonialSection from "../Components/TestimonialSection";
 
+import EmployerSection from "../Components/EmployerSection";
+
 function Home() {
   return (
     <div className="flex flex-col w-full">
       <HeroSection />          {/* Sections 3 & 4 */}
       <VisionSection />        {/* Section 5 */}
+      <EmployerSection />      {/* New Employer Section */}
       <ServicesGrid />         {/* Section 6 */}
       <ConsultancySection />   {/* Sections 7 & 8 */}
       <CaseStudies />          {/* Section 9 */}
