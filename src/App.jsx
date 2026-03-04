@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { Analytics } from "@vercel/analytics/react";
 import Layout from "./Components/Layout";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
@@ -46,6 +47,7 @@ function App() {
             <Route path="/company/dashboard" element={<Dashboard />} />
           </Routes>
         </Layout>
+        <Analytics />
       </AuthProvider>
     </Router>
   );
